@@ -1,729 +1,460 @@
 <!DOCTYPE html>
-<html lang="ms">
+<html lang="en">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Year 6 English Quest</title>
+  <title>Year 6 English Interactive Notes</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet" />
   <style>
-    :root {
-      --ink: #111827;
-      --muted: #64748b;
-      --soft: #f8fafc;
-      --blue: #2563eb;
-      --blue-dark: #1e40af;
-      --indigo: #4f46e5;
-      --green: #16a34a;
-      --amber: #f59e0b;
-      --rose: #e11d48;
-      --cyan: #0891b2;
-      --line: rgba(15, 23, 42, 0.10);
-      --panel: rgba(255, 255, 255, 0.86);
-      --shadow: 0 24px 70px rgba(15, 23, 42, 0.14);
-      --soft-shadow: 0 12px 30px rgba(15, 23, 42, 0.08);
-    }
-
-    * { box-sizing: border-box; }
-    html { scroll-behavior: smooth; }
+    @import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@400;600;700&display=swap');
 
     body {
-      margin: 0;
-      min-height: 100vh;
-      color: var(--ink);
-      font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "Segoe UI", Arial, sans-serif;
-      background:
-        radial-gradient(circle at 18% 12%, rgba(37, 99, 235, 0.20), transparent 28%),
-        radial-gradient(circle at 85% 10%, rgba(22, 163, 74, 0.15), transparent 23%),
-        radial-gradient(circle at 72% 82%, rgba(245, 158, 11, 0.14), transparent 26%),
-        linear-gradient(180deg, #ffffff 0%, #f5f7fb 42%, #ffffff 100%);
-      background-attachment: fixed;
+      font-family: 'Quicksand', sans-serif;
+      background-color: #f0fdf4;
+      background-image: radial-gradient(#bbf7d0 1px, transparent 1px);
+      background-size: 20px 20px;
     }
 
-    button, input, select { font: inherit; }
-    button { border: 0; cursor: pointer; }
-    h1, h2, h3, p { margin: 0; }
-
-    .shell { width: min(1240px, calc(100% - 32px)); margin: 0 auto; }
-
-    .top-nav {
-      position: sticky;
-      top: 0;
-      z-index: 10;
-      background: rgba(30, 64, 175, 0.88);
-      color: white;
-      border-bottom: 1px solid rgba(255, 255, 255, 0.20);
-      backdrop-filter: blur(20px);
-      -webkit-backdrop-filter: blur(20px);
-      box-shadow: 0 12px 30px rgba(30, 64, 175, 0.22);
-    }
-
-    .nav-inner {
-      min-height: 76px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 18px;
-      padding: 14px 0;
-    }
-
-    .brand { display: flex; align-items: center; gap: 12px; min-width: 0; }
-
-    .logo {
-      width: 48px;
-      height: 48px;
-      border-radius: 8px;
-      display: grid;
-      place-items: center;
-      background: rgba(255, 255, 255, 0.18);
-      border: 1px solid rgba(255, 255, 255, 0.24);
-      box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.26);
-      flex: 0 0 auto;
-    }
-
-    .brand h1 { font-size: 1.2rem; line-height: 1.05; font-weight: 850; letter-spacing: 0; }
-    .brand span { display: block; margin-top: 4px; color: rgba(255, 255, 255, 0.72); font-size: 0.78rem; font-weight: 750; text-transform: uppercase; }
-
-    .tabs {
-      display: flex;
-      gap: 6px;
-      padding: 6px;
-      border-radius: 999px;
-      background: rgba(15, 23, 42, 0.20);
-      flex-wrap: wrap;
-      justify-content: center;
-    }
-
-    .tab-btn {
-      min-height: 40px;
-      padding: 9px 16px;
-      border-radius: 999px;
-      color: rgba(255, 255, 255, 0.82);
-      background: transparent;
-      font-weight: 850;
-      transition: background 160ms ease, color 160ms ease, transform 160ms ease;
-    }
-
-    .tab-btn:hover { transform: translateY(-1px); background: rgba(255, 255, 255, 0.12); }
-    .tab-btn.active { background: white; color: var(--blue-dark); box-shadow: 0 12px 24px rgba(15, 23, 42, 0.18); }
-
-    .hero {
-      color: white;
-      background:
-        linear-gradient(135deg, rgba(37, 99, 235, 0.97), rgba(79, 70, 229, 0.95)),
-        #1e40af;
-      box-shadow: inset 0 -1px 0 rgba(255, 255, 255, 0.18);
-    }
-
-    .hero-inner {
+    .flip-card {
+      perspective: 1000px;
+      cursor: pointer;
       min-height: 250px;
-      display: grid;
-      grid-template-columns: minmax(0, 1fr) 360px;
-      gap: 24px;
-      align-items: center;
-      padding: 44px 0;
     }
 
-    .eyebrow {
-      width: fit-content;
-      padding: 7px 11px;
-      border-radius: 999px;
-      background: rgba(255, 255, 255, 0.16);
-      border: 1px solid rgba(255, 255, 255, 0.18);
-      color: rgba(255, 255, 255, 0.86);
-      font-size: 0.82rem;
-      font-weight: 850;
-      text-transform: uppercase;
-    }
-
-    .hero h2 { margin-top: 14px; font-size: clamp(2.4rem, 5.3vw, 4.9rem); line-height: 0.96; font-weight: 920; letter-spacing: 0; }
-    .hero p { margin-top: 16px; max-width: 62ch; color: rgba(255, 255, 255, 0.82); font-size: 1.08rem; line-height: 1.5; }
-
-    .hero-art {
+    .flip-card-inner {
+      position: relative;
       width: 100%;
-      aspect-ratio: 1.25;
-      border-radius: 8px;
-      background: rgba(255, 255, 255, 0.12);
-      border: 1px solid rgba(255, 255, 255, 0.22);
-      box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.24), 0 22px 44px rgba(0, 0, 0, 0.18);
+      height: 100%;
+      min-height: 250px;
+      text-align: center;
+      transition: transform 0.6s cubic-bezier(0.4, 0.2, 0.2, 1);
+      transform-style: preserve-3d;
+    }
+
+    .flip-card.flipped .flip-card-inner { transform: rotateY(180deg); }
+
+    .flip-card-front,
+    .flip-card-back {
+      position: absolute;
+      inset: 0;
+      -webkit-backface-visibility: hidden;
+      backface-visibility: hidden;
+      border-radius: 1rem;
+      box-shadow: 0 10px 25px rgba(15, 23, 42, 0.12);
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      padding: 1.5rem;
       overflow: hidden;
     }
 
-    main { padding: 30px 0 54px; }
-    .section { display: none; animation: rise 260ms ease; }
-    .section.active { display: block; }
-
-    @keyframes rise {
-      from { opacity: 0; transform: translateY(12px); }
-      to { opacity: 1; transform: translateY(0); }
+    .flip-card-front {
+      background-color: white;
+      border: 2px solid #e2e8f0;
     }
 
-    .panel, .card, .quiz-card, .modal-card {
-      border: 1px solid var(--line);
-      border-radius: 8px;
-      background: var(--panel);
-      backdrop-filter: blur(22px);
-      -webkit-backdrop-filter: blur(22px);
-      box-shadow: var(--soft-shadow);
-    }
-
-    .notes-grid { display: grid; grid-template-columns: minmax(0, 1.15fr) minmax(320px, 0.85fr); gap: 20px; align-items: start; }
-    .panel { padding: 22px; }
-    .panel-title { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-bottom: 16px; }
-    .panel-title h2 { font-size: 1.35rem; font-weight: 880; }
-    .panel-title span { color: var(--muted); font-size: 0.88rem; font-weight: 750; }
-
-    .topic-list { display: grid; gap: 10px; }
-    .topic {
-      display: grid;
-      grid-template-columns: 42px 1fr;
-      gap: 12px;
-      align-items: start;
-      padding: 13px;
-      border: 1px solid var(--line);
-      border-radius: 8px;
-      background: rgba(255, 255, 255, 0.72);
-      transition: transform 160ms ease, box-shadow 160ms ease;
-    }
-
-    .topic:hover { transform: translateY(-2px); box-shadow: var(--soft-shadow); }
-    .topic-icon { width: 42px; height: 42px; border-radius: 8px; display: grid; place-items: center; color: white; font-weight: 900; }
-    .topic strong { display: block; font-weight: 850; }
-    .topic p { margin-top: 4px; color: var(--muted); line-height: 1.42; }
-
-    .mini-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
-    .mini-card { padding: 16px; border: 1px solid var(--line); border-radius: 8px; background: rgba(255, 255, 255, 0.74); }
-    .mini-card strong { display: block; font-size: 1.02rem; }
-    .mini-card p { margin-top: 7px; color: var(--muted); line-height: 1.42; }
-
-    .chips { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 12px; }
-    .chip { padding: 7px 10px; border: 1px solid rgba(37, 99, 235, 0.20); border-radius: 999px; background: rgba(255, 255, 255, 0.74); color: #1d4ed8; font-weight: 800; font-size: 0.86rem; }
-
-    .lab-grid { display: grid; grid-template-columns: 360px minmax(0, 1fr); gap: 20px; align-items: start; }
-    .rule-buttons { display: grid; gap: 10px; }
-    .rule-btn {
-      padding: 14px;
-      border-radius: 8px;
-      border: 1px solid var(--line);
-      background: rgba(255, 255, 255, 0.74);
-      color: var(--ink);
-      text-align: left;
-      font-weight: 850;
-      transition: 160ms ease;
-    }
-    .rule-btn span { display: block; margin-top: 4px; color: var(--muted); font-size: 0.84rem; font-weight: 700; }
-    .rule-btn.active, .rule-btn:hover { background: #eff6ff; border-color: rgba(37, 99, 235, 0.35); transform: translateY(-1px); }
-
-    .lab-stage { min-height: 520px; padding: 24px; display: grid; gap: 16px; align-content: start; }
-    .stage-banner { display: grid; grid-template-columns: 1fr 220px; gap: 18px; align-items: center; padding: 22px; border-radius: 8px; background: linear-gradient(135deg, #ffffff, #eef6ff); border: 1px solid var(--line); }
-    .stage-banner h2 { font-size: clamp(1.8rem, 4vw, 3.2rem); line-height: 1; font-weight: 920; }
-    .stage-banner p { margin-top: 12px; color: var(--muted); line-height: 1.45; }
-
-    .example-box { padding: 18px; border-radius: 8px; border: 1px solid var(--line); background: rgba(255, 255, 255, 0.88); }
-    .example-box label { display: block; color: var(--muted); font-weight: 850; font-size: 0.82rem; text-transform: uppercase; margin-bottom: 8px; }
-    .example-box strong { font-size: clamp(1.25rem, 2.2vw, 2rem); line-height: 1.24; }
-
-    .builder { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; }
-    .builder select, .builder input { width: 100%; min-height: 44px; border: 1px solid var(--line); border-radius: 8px; padding: 10px 12px; outline: none; background: white; }
-    .builder select:focus, .builder input:focus { border-color: rgba(37, 99, 235, 0.55); box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.12); }
-
-    .primary, .secondary, .danger {
-      min-height: 44px;
-      padding: 11px 16px;
-      border-radius: 8px;
+    .flip-card-back {
       color: white;
-      font-weight: 900;
-      transition: transform 150ms ease, filter 150ms ease;
-    }
-    .primary { background: var(--blue); }
-    .secondary { background: var(--indigo); }
-    .danger { background: var(--rose); }
-    .primary:hover, .secondary:hover, .danger:hover { transform: translateY(-1px); filter: brightness(1.04); }
-    .primary:disabled, .secondary:disabled { opacity: 0.55; cursor: not-allowed; transform: none; }
-
-    .quiz-layout { display: grid; grid-template-columns: minmax(0, 1fr) 340px; gap: 20px; align-items: start; }
-    .quiz-card { overflow: hidden; }
-    .quiz-head { padding: 18px 22px; color: white; background: linear-gradient(135deg, var(--blue), var(--indigo)); display: flex; align-items: center; justify-content: space-between; gap: 12px; }
-    .quiz-head h2 { font-size: 1.45rem; font-weight: 900; }
-    .quiz-body { padding: 22px; display: grid; gap: 16px; }
-    .meta-row { display: flex; flex-wrap: wrap; gap: 8px; }
-    .tag { padding: 7px 10px; border-radius: 999px; border: 1px solid var(--line); background: white; color: #1d4ed8; font-size: 0.86rem; font-weight: 850; }
-    .question { min-height: 116px; padding: 18px; border-radius: 8px; border: 1px solid var(--line); background: white; display: grid; align-content: center; gap: 8px; box-shadow: var(--soft-shadow); }
-    .question strong { font-size: clamp(1.25rem, 2vw, 1.75rem); line-height: 1.26; }
-    .question span { color: var(--muted); line-height: 1.4; }
-    .answers { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
-    .answer { min-height: 76px; padding: 15px; border-radius: 8px; border: 1px solid var(--line); background: white; color: var(--ink); text-align: left; font-weight: 860; box-shadow: var(--soft-shadow); transition: 150ms ease; }
-    .answer:hover, .answer:focus-visible { transform: translateY(-2px); border-color: rgba(37, 99, 235, 0.45); outline: none; }
-    .answer.correct { background: #ecfdf3; border-color: rgba(22, 163, 74, 0.55); }
-    .answer.wrong { background: #fff1f2; border-color: rgba(225, 29, 72, 0.55); }
-    .feedback { min-height: 52px; padding: 13px; border-radius: 8px; border: 1px solid var(--line); background: rgba(255, 255, 255, 0.72); color: #334155; line-height: 1.42; }
-    .actions { display: flex; flex-wrap: wrap; gap: 10px; }
-
-    .side { position: sticky; top: 96px; padding: 16px; display: grid; gap: 16px; }
-    .stats { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; }
-    .stat { padding: 13px; border: 1px solid var(--line); border-radius: 8px; background: rgba(255,255,255,0.78); }
-    .stat span { display: block; color: var(--muted); font-size: 0.78rem; font-weight: 850; text-transform: uppercase; }
-    .stat strong { display: block; margin-top: 4px; font-size: 1.58rem; letter-spacing: 0; }
-    .progress-label { display: flex; justify-content: space-between; color: var(--muted); font-weight: 850; font-size: 0.86rem; }
-    .progress { height: 14px; border-radius: 999px; background: rgba(15, 23, 42, 0.09); overflow: hidden; border: 1px solid var(--line); margin-top: 8px; }
-    .bar { width: 0%; height: 100%; background: linear-gradient(90deg, var(--blue), var(--green), var(--amber)); transition: width 220ms ease; }
-    .focus-list { display: grid; gap: 8px; }
-    .focus-item { display: grid; grid-template-columns: 32px 1fr auto; gap: 9px; align-items: center; padding: 9px; border: 1px solid var(--line); border-radius: 8px; background: rgba(255,255,255,0.74); }
-    .focus-icon { width: 32px; height: 32px; display: grid; place-items: center; border-radius: 8px; color: white; font-weight: 900; }
-    .focus-item span { display: block; color: var(--muted); font-size: 0.82rem; margin-top: 2px; }
-    .mini-score { font-weight: 900; color: var(--blue-dark); }
-
-    .modal-layer { position: fixed; inset: 0; display: none; place-items: center; padding: 18px; background: rgba(15, 23, 42, 0.42); backdrop-filter: blur(18px); -webkit-backdrop-filter: blur(18px); z-index: 30; }
-    .modal-layer.show { display: grid; }
-    .modal-card { width: min(560px, 100%); padding: 24px; text-align: center; display: grid; gap: 13px; }
-    .modal-card h2 { font-size: 2rem; }
-    .modal-card p { color: var(--muted); line-height: 1.5; }
-
-    footer { padding: 32px 0 44px; text-align: center; color: var(--muted); border-top: 1px solid var(--line); }
-
-    @media (max-width: 980px) {
-      .hero-inner, .notes-grid, .lab-grid, .quiz-layout { grid-template-columns: 1fr; }
-      .side { position: static; }
-      .hero-art { max-width: 420px; justify-self: center; }
-      .stage-banner { grid-template-columns: 1fr; }
+      transform: rotateY(180deg);
     }
 
-    @media (max-width: 680px) {
-      .shell { width: min(100% - 20px, 1240px); }
-      .nav-inner { align-items: stretch; flex-direction: column; }
-      .tabs { justify-content: stretch; border-radius: 8px; }
-      .tab-btn { flex: 1 1 auto; border-radius: 8px; }
-      .hero-inner { padding: 32px 0; }
-      .hero h2 { font-size: 2.35rem; }
-      .mini-grid, .builder, .answers, .stats { grid-template-columns: 1fr; }
-      .quiz-head { align-items: flex-start; flex-direction: column; }
+    .accordion-content {
+      transition: max-height 0.35s ease, padding 0.3s ease;
+      max-height: 0;
+      overflow: hidden;
     }
+
+    .accordion-content.open { max-height: 900px; }
+    .chat-bubble-left { border-radius: 1rem 1rem 1rem 0; }
+    .chat-bubble-right { border-radius: 1rem 1rem 0 1rem; }
+    .card-img-overlay { background: linear-gradient(to top, rgba(15, 23, 42, 0.92), rgba(15, 23, 42, 0.32)); }
+    .mini-quiz-input:focus { transform: scale(1.02); }
+    .bounce-in { animation: bounceIn 0.6s cubic-bezier(0.68, -0.55, 0.265, 1.55); }
+
+    @keyframes bounceIn {
+      0% { transform: scale(0.86); opacity: 0; }
+      100% { transform: scale(1); opacity: 1; }
+    }
+
+    .shake { animation: shake 0.4s; }
+    @keyframes shake {
+      0%, 100% { transform: translateX(0); }
+      25% { transform: translateX(-10px); }
+      50% { transform: translateX(10px); }
+      75% { transform: translateX(-10px); }
+    }
+
+    .option-btn { transition: all 0.2s ease; }
+    .option-btn:hover { transform: translateY(-2px); box-shadow: 0 8px 18px rgba(15, 23, 42, 0.12); }
+
+    .confetti {
+      position: fixed;
+      width: 10px;
+      height: 10px;
+      animation: fall 3s linear infinite;
+      z-index: 50;
+    }
+
+    @keyframes fall { to { transform: translateY(100vh) rotate(360deg); } }
+    ::-webkit-scrollbar { width: 8px; }
+    ::-webkit-scrollbar-track { background: #f1f5f9; }
+    ::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 4px; }
+    ::-webkit-scrollbar-thumb:hover { background: #94a3b8; }
   </style>
 </head>
-<body>
-  <header class="top-nav">
-    <div class="shell nav-inner">
-      <div class="brand">
-        <div class="logo" aria-hidden="true">
-          <svg width="32" height="32" viewBox="0 0 64 64">
-            <rect x="10" y="13" width="44" height="38" rx="8" fill="white" opacity="0.95" />
-            <path d="M19 25h25M19 34h18M19 43h25" stroke="#2563eb" stroke-width="5" stroke-linecap="round" />
-            <path d="M47 8l5 9 10 1-7 7 2 10-10-5-9 5 2-10-7-7 10-1z" fill="#f59e0b" />
-          </svg>
+<body class="min-h-screen text-gray-800 p-4 md:p-8">
+  <div class="max-w-5xl mx-auto bg-white rounded-3xl shadow-2xl overflow-hidden border border-emerald-100">
+    <header class="bg-gradient-to-r from-emerald-400 to-teal-500 p-8 text-center text-white relative overflow-hidden">
+      <img src="https://api.dicebear.com/7.x/fun-emoji/svg?seed=Guru" alt="Teacher mascot" class="w-24 h-24 mx-auto mb-4 bg-white rounded-full border-4 border-emerald-200 shadow-lg hover:scale-110 transition-transform cursor-pointer" title="Hi! Let's learn English!" />
+      <h1 class="text-4xl md:text-5xl font-bold mb-3"><i class="fas fa-book-open mr-3"></i>Year 6 Interactive Notes</h1>
+      <p class="text-lg md:text-xl opacity-90">Click, Explore, & Test Your Knowledge!</p>
+      <div class="absolute top-0 left-0 w-32 h-32 bg-white opacity-10 rounded-full -translate-x-10 -translate-y-10"></div>
+      <div class="absolute bottom-0 right-0 w-40 h-40 bg-white opacity-10 rounded-full translate-x-10 translate-y-10"></div>
+    </header>
+
+    <nav class="flex flex-wrap justify-center gap-2 p-4 bg-gray-50 border-b">
+      <button id="btn-grammar" onclick="showTab('grammar')" class="tab-btn px-6 py-3 rounded-full font-bold transition-colors bg-teal-600 text-white shadow-md"><i class="fas fa-spell-check mr-2"></i>Grammar</button>
+      <button id="btn-vocab" onclick="showTab('vocab')" class="tab-btn px-6 py-3 rounded-full font-bold transition-colors bg-white text-teal-600 hover:bg-teal-50 border border-teal-200"><i class="fas fa-language mr-2"></i>Vocabulary</button>
+      <button id="btn-functions" onclick="showTab('functions')" class="tab-btn px-6 py-3 rounded-full font-bold transition-colors bg-white text-teal-600 hover:bg-teal-50 border border-teal-200"><i class="fas fa-comments mr-2"></i>Language Functions</button>
+      <button id="btn-quiz-game" onclick="showTab('quiz-game')" class="tab-btn px-6 py-3 rounded-full font-bold transition-colors bg-white text-indigo-600 hover:bg-indigo-50 border border-indigo-200"><i class="fas fa-gamepad mr-2"></i>Quiz Game</button>
+    </nav>
+
+    <main class="p-6 md:p-8 min-h-[560px]">
+      <section id="grammar" class="tab-content space-y-4">
+        <h2 class="text-2xl font-bold text-teal-800 mb-6 border-b-2 border-teal-100 pb-2">Grammar Rules & Examples</h2>
+        <p class="text-gray-500 mb-4 text-sm"><i class="fas fa-info-circle mr-1"></i> Click each rule to read the example and try a mini task.</p>
+        <div id="grammar-list" class="space-y-4"></div>
+      </section>
+
+      <section id="vocab" class="tab-content hidden">
+        <h2 class="text-2xl font-bold text-teal-800 mb-6 border-b-2 border-teal-100 pb-2">Vocabulary Flashcards</h2>
+        <p class="text-gray-500 mb-6 text-sm text-center md:text-left"><i class="fas fa-hand-pointer text-teal-500 animate-pulse mr-1"></i> Click each image to reveal Year 6 words.</p>
+        <div id="vocab-cards" class="grid grid-cols-1 md:grid-cols-2 gap-6"></div>
+      </section>
+
+      <section id="functions" class="tab-content hidden">
+        <h2 class="text-2xl font-bold text-teal-800 mb-6 border-b-2 border-teal-100 pb-2">Language Functions</h2>
+        <p class="text-gray-500 mb-6 text-sm"><i class="fas fa-comment-dots mr-1"></i> Useful language for real classroom situations.</p>
+        <div id="function-list" class="space-y-6"></div>
+      </section>
+
+      <section id="quiz-game" class="tab-content hidden">
+        <h2 class="text-2xl font-bold text-indigo-800 mb-6 border-b-2 border-indigo-100 pb-2">Let's Play & Test Your Knowledge!</h2>
+
+        <div id="start-screen" class="p-8 text-center bounce-in">
+          <img src="https://api.dicebear.com/7.x/bottts/svg?seed=EnglishMaster&backgroundColor=b6e3f4" alt="Quiz mascot" class="w-32 h-32 mx-auto rounded-full mb-6 border-4 border-indigo-100 shadow-lg" />
+          <h2 class="text-2xl font-bold text-gray-800 mb-4">Are you ready?</h2>
+          <p class="text-gray-600 mb-8">Answer 10 questions based on the Year 6 syllabus notes.</p>
+          <button onclick="startGame()" class="bg-indigo-500 hover:bg-indigo-600 text-white text-xl font-bold py-4 px-8 rounded-full shadow-lg transform transition hover:scale-105"><i class="fas fa-play mr-2"></i>Start Game!</button>
         </div>
-        <div>
-          <h1>Year 6 English Quest</h1>
-          <span>Grammar, Vocabulary & Language Functions</span>
+
+        <div id="quiz-screen" class="hidden flex-col h-full bg-white rounded-2xl border-2 border-indigo-100 overflow-hidden shadow-sm">
+          <div class="bg-gray-200 h-3 w-full"><div id="progress-bar" class="bg-indigo-500 h-3 w-0 transition-all duration-500"></div></div>
+          <div class="p-6 flex-grow">
+            <div class="flex flex-wrap justify-between items-center gap-3 mb-6">
+              <span class="bg-indigo-100 text-indigo-800 text-xs md:text-sm font-bold px-3 py-1 rounded-full" id="question-category">Grammar</span>
+              <span class="text-gray-500 font-bold text-sm">Question <span id="current-question-num">1</span>/10</span>
+              <span class="bg-yellow-100 text-yellow-800 text-xs md:text-sm font-bold px-3 py-1 rounded-full"><i class="fas fa-star text-yellow-500"></i> Score: <span id="score">0</span></span>
+            </div>
+            <h3 id="question-text" class="text-xl md:text-2xl font-bold text-gray-800 mb-6 text-center min-h-[80px] flex items-center justify-center"></h3>
+            <div id="options-container" class="grid grid-cols-1 md:grid-cols-2 gap-4"></div>
+          </div>
+          <div id="feedback-area" class="min-h-[4rem] py-2 flex flex-col items-center justify-center text-center font-bold text-white transition-colors duration-300"></div>
         </div>
-      </div>
-      <nav class="tabs" aria-label="Navigasi utama">
-        <button class="tab-btn active" data-tab="nota">Nota</button>
-        <button class="tab-btn" data-tab="makmal">Makmal</button>
-        <button class="tab-btn" data-tab="kuiz">Kuiz</button>
-      </nav>
-    </div>
-  </header>
 
-  <section class="hero">
-    <div class="shell hero-inner">
-      <div>
-        <div class="eyebrow" id="heroEyebrow">DSKP Year 6</div>
-        <h2 id="heroTitle">Belajar English dengan misi interaktif.</h2>
-        <p id="heroText">Nota ringkas, latihan eksplorasi, dan kuiz visual disusun untuk grammar, vocabulary dan language functions Tahun 6.</p>
-      </div>
-      <svg class="hero-art" viewBox="0 0 500 400" role="img" aria-label="Ilustrasi pembelajaran">
-        <rect width="500" height="400" fill="rgba(255,255,255,0.08)" />
-        <circle cx="90" cy="74" r="42" fill="#f59e0b" />
-        <path d="M0 306c84-44 150-37 230-9 99 34 170 16 270-42v145H0z" fill="#16a34a" opacity="0.82" />
-        <path d="M0 342c115-37 177-23 255-3 104 26 161 10 245-31v92H0z" fill="#0891b2" opacity="0.35" />
-        <rect x="270" y="74" width="142" height="190" rx="18" fill="white" opacity="0.95" />
-        <path d="M294 115h84M294 151h62M294 187h84" stroke="#2563eb" stroke-width="12" stroke-linecap="round" />
-        <path d="M133 276h132l-35-94h-62z" fill="white" stroke="#111827" stroke-width="8" />
-        <path d="M165 182c15-42 58-42 73 0" fill="none" stroke="#111827" stroke-width="8" stroke-linecap="round" />
-        <circle cx="178" cy="235" r="11" fill="#2563eb" />
-        <circle cx="222" cy="235" r="11" fill="#e11d48" />
-        <path d="M80 300l40-92 40 92z" fill="#4f46e5" stroke="#111827" stroke-width="8" />
-      </svg>
-    </div>
-  </section>
-
-  <main class="shell">
-    <section class="section active" id="notaSection">
-      <div class="notes-grid">
-        <div class="panel">
-          <div class="panel-title">
-            <h2>Year 6 Grammar</h2>
-            <span>Mid-A2 focus</span>
+        <div id="end-screen" class="hidden p-8 text-center bounce-in">
+          <div class="text-6xl mb-4" id="result-emoji">🏆</div>
+          <h2 class="text-3xl font-black text-gray-800 mb-2">Game Over!</h2>
+          <p class="text-xl text-gray-600 mb-6">Your score:</p>
+          <div class="text-5xl font-black text-indigo-600 mb-8"><span id="final-score">0</span> / 10</div>
+          <div class="bg-indigo-50 rounded-xl p-4 mb-8 text-left border border-indigo-100">
+            <h4 class="font-bold text-indigo-800 mb-2">Feedback:</h4>
+            <p id="result-message" class="text-gray-700"></p>
           </div>
-          <div class="topic-list" id="grammarTopics"></div>
+          <button onclick="restartGame()" class="bg-indigo-600 hover:bg-indigo-700 text-white text-xl font-bold py-3 px-8 rounded-full shadow-lg transform transition hover:scale-105"><i class="fas fa-redo mr-2"></i>Play Again</button>
         </div>
-        <div class="panel">
-          <div class="panel-title">
-            <h2>Language Functions</h2>
-            <span>Classroom use</span>
-          </div>
-          <div class="mini-grid" id="functionCards"></div>
-          <div class="panel-title" style="margin-top:22px; margin-bottom:8px;">
-            <h2>Core Vocabulary</h2>
-            <span>sample word bank</span>
-          </div>
-          <div class="chips" id="vocabChips"></div>
-        </div>
-      </div>
-    </section>
+      </section>
+    </main>
 
-    <section class="section" id="makmalSection">
-      <div class="lab-grid">
-        <aside class="panel">
-          <div class="panel-title">
-            <h2>Makmal Bahasa</h2>
-            <span>Pilih fokus</span>
-          </div>
-          <div class="rule-buttons" id="ruleButtons"></div>
-        </aside>
-        <section class="panel lab-stage">
-          <div class="stage-banner">
-            <div>
-              <div class="eyebrow" style="background:#eff6ff;color:#1d4ed8;border-color:rgba(37,99,235,.18);" id="labType">Grammar Lab</div>
-              <h2 id="labTitle">Past continuous + past simple</h2>
-              <p id="labDesc">Gunakan when untuk gabungkan aksi yang sedang berlaku dengan peristiwa yang mencelah.</p>
-            </div>
-            <svg viewBox="0 0 260 200" width="100%" aria-label="Ilustrasi makmal bahasa">
-              <rect width="260" height="200" rx="8" fill="#eff6ff" />
-              <rect x="48" y="42" width="164" height="104" rx="14" fill="white" stroke="#dbeafe" stroke-width="4" />
-              <path d="M72 72h86M72 100h116M72 128h74" stroke="#2563eb" stroke-width="8" stroke-linecap="round" />
-              <circle cx="206" cy="48" r="24" fill="#f59e0b" />
-              <path d="M42 162c44-26 84-22 120-8 40 15 62 12 94-7v53H42z" fill="#16a34a" opacity=".82" />
-            </svg>
-          </div>
-          <div class="example-box">
-            <label>Contoh</label>
-            <strong id="labExample">He was feeding the elephant when it escaped.</strong>
-          </div>
-          <div class="example-box">
-            <label>Cuba bina ayat</label>
-            <div class="builder">
-              <input id="builderName" value="He" aria-label="Subject" />
-              <select id="builderVerb" aria-label="Verb">
-                <option value="was feeding">was feeding</option>
-                <option value="used to be">used to be</option>
-                <option value="may win">may win</option>
-                <option value="will visit">will visit</option>
-              </select>
-              <input id="builderObject" value="the elephant" aria-label="Object" />
-            </div>
-            <p id="builderOutput" style="margin-top:14px;color:#1d4ed8;font-weight:900;font-size:1.2rem;line-height:1.35;">He was feeding the elephant.</p>
-          </div>
-          <div class="example-box">
-            <label>Mini cabaran</label>
-            <strong id="labChallenge">Tukar ayat ini kepada bentuk yang betul: He ___ the elephant when it escaped.</strong>
-          </div>
-        </section>
-      </div>
-    </section>
-
-    <section class="section" id="kuizSection">
-      <div class="quiz-layout">
-        <section class="quiz-card">
-          <div class="quiz-head">
-            <h2 id="roundLabel">Round 1 / 12</h2>
-            <div style="font-weight:850;">Year 6 Quest</div>
-          </div>
-          <div class="quiz-body">
-            <div class="meta-row">
-              <span class="tag" id="categoryTag">Grammar</span>
-              <span class="tag" id="topicTag">Past continuous with past simple</span>
-            </div>
-            <div class="question">
-              <strong id="questionText">He ___ the elephant when it escaped.</strong>
-              <span id="questionHint">Pilih satu jawapan.</span>
-            </div>
-            <div class="answers" id="answers"></div>
-            <div class="feedback" id="feedback">Tekan jawapan untuk mula mengumpul bintang.</div>
-            <div class="actions">
-              <button class="primary" id="nextBtn" disabled>Soalan Seterusnya</button>
-              <button class="secondary" id="hintBtn">Petunjuk</button>
-              <button class="danger" id="restartBtn">Mula Semula</button>
-            </div>
-          </div>
-        </section>
-
-        <aside class="panel side">
-          <div class="panel-title" style="margin-bottom:0;">
-            <h2>Dashboard</h2>
-            <span id="modeLabel">Campuran</span>
-          </div>
-          <div class="builder" style="grid-template-columns:1fr;">
-            <input id="playerName" type="text" value="Explorer" maxlength="16" aria-label="Nama pemain" />
-            <select id="mode" aria-label="Mod kuiz">
-              <option value="mixed">Campuran DSKP</option>
-              <option value="grammar">Grammar</option>
-              <option value="vocabulary">Vocabulary</option>
-              <option value="function">Language Functions</option>
-            </select>
-          </div>
-          <div class="stats">
-            <div class="stat"><span>Score</span><strong id="score">0</strong></div>
-            <div class="stat"><span>Streak</span><strong id="streak">0</strong></div>
-            <div class="stat"><span>Bintang</span><strong id="stars">0</strong></div>
-            <div class="stat"><span>Nyawa</span><strong id="lives">3</strong></div>
-          </div>
-          <div>
-            <div class="progress-label"><span>Kemajuan</span><span id="progressText">0%</span></div>
-            <div class="progress"><div class="bar" id="bar"></div></div>
-          </div>
-          <div>
-            <div class="panel-title" style="margin-bottom:10px;"><h2>Fokus DSKP</h2></div>
-            <div class="focus-list" id="skillList"></div>
-          </div>
-        </aside>
-      </div>
-    </section>
-  </main>
-
-  <div class="modal-layer" id="modal">
-    <div class="modal-card">
-      <h2 id="resultTitle">Tahniah!</h2>
-      <p id="resultText">Kamu berjaya tamatkan misi.</p>
-      <button class="primary" id="playAgainBtn">Main Lagi</button>
-    </div>
+    <footer class="bg-gray-100 text-center py-4 text-gray-500 text-sm font-medium">Keep practicing your English every day! 🌟</footer>
   </div>
 
-  <footer>
-    <div class="shell">Modul Interaktif Year 6 English berdasarkan grammar, vocabulary dan language functions DSKP.</div>
-  </footer>
-
   <script>
-    const grammarTopics = [
-      ["Past continuous", "He was feeding the elephant when it escaped.", "P"],
-      ["Used to", "He used to be an actor.", "U"],
-      ["Present perfect", "Have you ever been to Sarawak?", "E"],
-      ["For and since", "How long have you been here? Since 3 o'clock.", "S"],
-      ["Comparisons", "He's as tall as her. It isn't hot enough.", "C"],
-      ["Passive voice", "Cotton is grown in India.", "V"],
-      ["Future forms", "He will be famous. He's going to play tomorrow.", "F"],
-      ["First conditional", "If you rest, you'll feel better.", "I"],
-      ["Modals", "He may win. You must wear a helmet.", "M"],
-      ["Reported speech", "He said he loved sugar.", "R"],
-      ["Indefinite words", "Someone will find it anywhere.", "A"],
-      ["Question tags", "You don't know me, do you?", "Q"]
+    const grammarItems = [
+      { id: 'g1', icon: 'Robot1', color: 'blue', title: 'Past Continuous with Past Simple', rule: 'Used when an action was happening and was suddenly interrupted by another action.', example: 'He <b class="text-blue-600">was feeding</b> the elephant when it <b class="text-red-500">escaped</b>.', quiz: 'They were walking home when it suddenly', answer: 'rained', placeholder: 'rain...' },
+      { id: 'g2', icon: 'Robot2', color: 'purple', title: 'Used to', rule: 'Used to describe past habits or states that are no longer true now.', example: 'He <b class="text-purple-600">used to be</b> an actor.', quiz: 'I ___ to like vegetables, but now I do.', answer: "didn't use", placeholder: "didn't..." },
+      { id: 'g3', icon: 'Robot3', color: 'green', title: 'Present Perfect + Ever', rule: 'Used to ask about life experiences.', example: '<b class="text-green-600">Have</b> you ever been to Sarawak?', quiz: '___ you ever joined a science quiz?', answer: 'have', placeholder: 'Have' },
+      { id: 'g4', icon: 'Robot4', color: 'orange', title: 'For and Since', rule: 'Use for with a duration. Use since with a starting point.', example: 'For an hour. Since 3 o’clock.', quiz: 'I have been here ___ Monday.', answer: 'since', placeholder: 'for/since' },
+      { id: 'g5', icon: 'Robot5', color: 'red', title: 'Passive Voice', rule: 'Used when the focus is on the action or object.', example: 'Cotton <b class="text-green-600">is grown</b> in India.', quiz: 'The window was', answer: 'broken', placeholder: '...' },
+      { id: 'g6', icon: 'Robot6', color: 'indigo', title: 'First Conditional', rule: 'Used for likely future results: If + present simple, will + verb.', example: '<b class="text-orange-600">If you rest</b>, you <b class="text-orange-600">will feel</b> better.', quiz: 'If you study, you ___ improve.', answer: 'will', placeholder: 'will' },
+      { id: 'g7', icon: 'Robot7', color: 'pink', title: 'Modal Verbs', rule: 'May, might and could show possibility. Must and have to show obligation. Should gives advice.', example: 'You <b class="text-red-600">must</b> wear a helmet. He <b class="text-indigo-600">may</b> win.', quiz: 'You ___ finish your homework.', answer: 'must', placeholder: 'must' },
+      { id: 'g8', icon: 'Robot8', color: 'teal', title: 'Question Tags', rule: 'A negative statement usually uses a positive tag.', example: 'You don’t know me, <b class="text-teal-600">do you?</b>', quiz: 'She is your teacher, ___ she?', answer: "isn't", placeholder: "isn't" }
     ];
 
-    const functionsList = [
-      ["Future plans", "Ask and describe future plans and events."],
-      ["Rules", "Ask and express rules and obligations."],
-      ["Advice", "Explain and give reasons for simple advice."],
-      ["Stories", "Narrate short stories, events and experiences."],
-      ["Interaction", "Keep interaction going by asking questions."],
-      ["Suggestions", "Make and respond to simple suggestions."],
-      ["Description", "Describe people, personality and characters."],
-      ["Instructions", "Give and agree a longer sequence of instructions."]
+    const vocabCards = [
+      { title: 'JOBS', subtitle: 'Professions', icon: 'fa-briefcase', color: 'blue', image: 'https://images.unsplash.com/photo-1521737604893-d14cc237f11d?auto=format&fit=crop&w=700&q=80', words: ['🧑‍🚀 Astronaut', '🧑‍🍳 Baker', '👷 Engineer', '💡 Inventor', '🎤 Journalist', '🔧 Mechanic', '🎨 Artist', '📷 Photographer'] },
+      { title: 'ENVIRONMENT', subtitle: 'Nature & Earth', icon: 'fa-leaf', color: 'green', image: 'https://images.unsplash.com/photo-1542601906990-b4d3fb778b09?auto=format&fit=crop&w=700&q=80', words: ['🌦️ Climate', '🦕 Extinct', '🗑️ Litter / Rubbish', '🛡️ Protect / Save', '♻️ Recycle', '🏭 Fumes', '⚡ Energy', '🌍 Earth'] },
+      { title: 'PLACES', subtitle: 'Buildings & Locations', icon: 'fa-building', color: 'orange', image: 'https://images.unsplash.com/photo-1477959858617-67f85cf4f1df?auto=format&fit=crop&w=700&q=80', words: ['✈️ Airport', '🏦 Bank', '🎓 College', '🚒 Fire station', '🛣️ Motorway', '🏟️ Stadium', '🎭 Theatre', '🚉 Platform'] },
+      { title: 'ADJECTIVES', subtitle: 'Describing Words', icon: 'fa-star', color: 'purple', image: 'https://images.unsplash.com/photo-1531256379416-9f000e90aacc?auto=format&fit=crop&w=700&q=80', words: ['🌟 Excellent', '👽 Strange', '✨ Unusual', '🍋 Sour', '🦨 Smelly', '😠 Unfriendly', '😰 Worried', '💰 Cheap'] },
+      { title: 'TRANSPORT', subtitle: 'Moving Around', icon: 'fa-train', color: 'cyan', image: 'https://images.unsplash.com/photo-1474487548417-781cb71495f3?auto=format&fit=crop&w=700&q=80', words: ['🚆 Train', '🧳 Suitcase', '🛞 Tyre', '🛣️ Motorway', '👤 Passenger', '🚒 Fire engine', '🛗 Elevator', '🌉 Bridge'] },
+      { title: 'SCHOOL', subtitle: 'Learning Words', icon: 'fa-school', color: 'rose', image: 'https://images.unsplash.com/photo-1503676260728-1c00da094a0b?auto=format&fit=crop&w=700&q=80', words: ['🧪 Experiment', '🔬 Science', '🌍 Geography', '📜 History', '🧮 Maths', '📚 Subject', '🧑‍🎓 Student', '🗂️ Project'] }
     ];
 
-    const vocabulary = ["actor", "airport", "ambulance", "astronaut", "baker", "charity", "climate", "engineer", "environment", "festival", "journalist", "mechanic", "medicine", "platform", "recycle", "scientist", "stadium", "suitcase", "theatre", "zookeeper", "electricity", "important", "unusual", "worried"];
-
-    const rules = [
-      { type: "Grammar Lab", title: "Past continuous + past simple", desc: "Gunakan when untuk gabungkan aksi yang sedang berlaku dengan peristiwa yang mencelah.", example: "He was feeding the elephant when it escaped.", challenge: "He ___ the elephant when it escaped.", options: ["was feeding", "was reading", "was watching"] },
-      { type: "Grammar Lab", title: "Present perfect + ever", desc: "Gunakan Have/Has + ever untuk bertanya pengalaman hidup.", example: "Have you ever been to Sarawak?", challenge: "___ you ever joined a science quiz?", options: ["Have", "Has", "Did"] },
-      { type: "Grammar Lab", title: "Future forms", desc: "Will untuk ramalan umum. Going to untuk rancangan atau bukti sekarang.", example: "She is going to play tomorrow.", challenge: "Look at the clouds. It ___ rain.", options: ["is going to", "will", "might"] },
-      { type: "Language Lab", title: "Rules and obligations", desc: "Must untuk wajib. Don't have to untuk tidak wajib. Should untuk nasihat.", example: "You don't have to wear uniform today.", challenge: "You ___ wear a helmet when cycling.", options: ["must", "should", "may"] },
-      { type: "Vocabulary Lab", title: "Core vocabulary", desc: "Kuasai perkataan melalui konteks, bukan hafalan semata-mata.", example: "A mechanic repairs machines and engines.", challenge: "A person who repairs machines is a ___.", options: ["mechanic", "journalist", "artist"] }
+    const functionsData = [
+      { title: 'Making Suggestions', theme: 'blue', left: 'I’m so bored. What should we do today?', right: ['Why don’t we play outside?', 'Let’s go to the cinema!', 'How about reading a book?'] },
+      { title: 'Rules & Obligations', theme: 'red', left: 'What are the rules at the library, Sir?', right: ['You must be quiet.', 'You mustn’t eat or drink here.', 'You don’t have to bring your own books.'] },
+      { title: 'Future Plans', theme: 'green', left: 'What are your plans for the weekend?', right: ['I am going to visit my grandmother.', 'I think I will help her bake a cake.'] },
+      { title: 'Giving Advice', theme: 'yellow', left: 'I feel tired and worried.', right: ['You should rest.', 'You should drink water because it helps you feel better.'] },
+      { title: 'Keeping Interaction Going', theme: 'indigo', left: 'I went to a concert yesterday.', right: ['Who did you go with?', 'What music did they perform?', 'Did you enjoy it?'] }
     ];
 
-    const questionBank = [
-      { category: "grammar", topic: "Past continuous with past simple", title: "Grammar Gate", text: "He ___ the elephant when it escaped.", hint: "Aksi yang sedang berlaku guna past continuous.", options: ["was feeding", "feeds", "has fed", "will feed"], answer: "was feeding", explain: "Betul: was/were + verb-ing digunakan dengan when + past simple.", focus: "Past continuous" },
-      { category: "grammar", topic: "Used to", title: "Memory Bridge", text: "He ___ be an actor, but now he is a writer.", hint: "Gunakan bentuk untuk tabiat atau keadaan lama.", options: ["used to", "uses to", "is used to", "use to"], answer: "used to", explain: "Used to menerangkan perkara yang benar pada masa lalu tetapi tidak lagi sekarang.", focus: "Used to" },
-      { category: "grammar", topic: "Present perfect + ever", title: "Sarawak Skyport", text: "___ you ever been to Sarawak?", hint: "Soalan pengalaman hidup guna present perfect.", options: ["Have", "Did", "Are", "Will"], answer: "Have", explain: "Have you ever been... ialah bentuk present perfect untuk pengalaman.", focus: "Present perfect" },
-      { category: "grammar", topic: "How long, for and since", title: "Time Tunnel", text: "How long have you been here? ___ 3 o'clock.", hint: "Pilih perkataan untuk masa mula.", options: ["Since", "For", "Ever", "Yet"], answer: "Since", explain: "Since digunakan untuk titik mula masa, seperti since 3 o'clock.", focus: "For / since" },
-      { category: "grammar", topic: "Comparisons with as, too and not enough", title: "Comparison Climb", text: "The soup is ___ hot to drink.", hint: "Maksudnya terlalu panas.", options: ["too", "as", "enough", "since"], answer: "too", explain: "Too + adjective bermaksud berlebihan: too hot to drink.", focus: "Too / enough" },
-      { category: "grammar", topic: "Passive voice", title: "World Workshop", text: "Cotton ___ in India.", hint: "Ayat passive voice: subject menerima tindakan.", options: ["is grown", "grows", "grew", "is growing"], answer: "is grown", explain: "Passive voice present simple: is/are + past participle.", focus: "Passive voice" },
-      { category: "grammar", topic: "Future forms: will and going to", title: "Future Field", text: "Look at those dark clouds. It ___ rain.", hint: "Ada bukti sekarang, jadi gunakan going to.", options: ["is going to", "will", "used to", "has"], answer: "is going to", explain: "Going to sesuai untuk ramalan berdasarkan bukti yang kita nampak.", focus: "Future forms" },
-      { category: "grammar", topic: "Present simple for future events", title: "Timetable Station", text: "The movie ___ at 7 o'clock tonight.", hint: "Jadual atau acara tetap boleh guna present simple.", options: ["starts", "started", "is starting yesterday", "has start"], answer: "starts", explain: "Present simple digunakan untuk jadual: The movie starts at 7 o'clock.", focus: "Future events" },
-      { category: "grammar", topic: "First conditional", title: "Health Path", text: "If you rest, you ___ feel better.", hint: "If + present simple, will + base verb.", options: ["will", "would", "were", "used to"], answer: "will", explain: "First conditional: If you rest, you will feel better.", focus: "First conditional" },
-      { category: "grammar", topic: "Modal verbs for speculation", title: "Race Radar", text: "He ___ win the race. He is very fast.", hint: "Pilih modal untuk kemungkinan.", options: ["may", "must to", "has to", "should to"], answer: "may", explain: "May, might dan could menunjukkan kemungkinan.", focus: "May / might / could" },
-      { category: "grammar", topic: "Modal verbs for obligation and advice", title: "Rules Room", text: "You ___ wear a helmet when you ride a bicycle.", hint: "Ini peraturan keselamatan yang kuat.", options: ["must", "might", "used to", "ever"], answer: "must", explain: "Must digunakan untuk kewajipan atau peraturan penting.", focus: "Must / should" },
-      { category: "grammar", topic: "Reported speech", title: "Story Studio", text: "Direct: I love sugar. Reported: He said he ___ sugar.", hint: "Dalam reported speech, love berubah kepada loved.", options: ["loved", "loves", "will love", "has loved"], answer: "loved", explain: "Reported speech biasanya backshift: love menjadi loved.", focus: "Reported speech" },
-      { category: "grammar", topic: "Indefinite pronouns and adverbs", title: "Lost Item Lab", text: "I can't find my file ___.", hint: "Gunakan adverb untuk tempat yang tidak tentu.", options: ["anywhere", "someone", "anything", "everybody"], answer: "anywhere", explain: "Anywhere merujuk kepada tempat tidak tentu dalam ayat negatif.", focus: "Indefinite words" },
-      { category: "grammar", topic: "Question tags", title: "Tag Tower", text: "You don't know me, ___?", hint: "Ayat negatif mengambil tag positif.", options: ["do you", "don't you", "are you", "did you"], answer: "do you", explain: "Question tag: negative statement + positive tag.", focus: "Question tags" },
-      { category: "vocabulary", topic: "Work", title: "Career Market", text: "A person who repairs machines and engines is a ___.", hint: "Perkataan ini ada dalam Year 6 wordlist.", options: ["mechanic", "journalist", "artist", "singer"], answer: "mechanic", explain: "Mechanic ialah orang yang membaiki mesin atau kenderaan.", focus: "Work words" },
-      { category: "vocabulary", topic: "Health", title: "Health Clinic", text: "Which word means ubat?", hint: "Cari perkataan dalam kategori health.", options: ["medicine", "stadium", "platform", "suitcase"], answer: "medicine", explain: "Medicine bermaksud ubat.", focus: "Health words" },
-      { category: "vocabulary", topic: "World around us", title: "Eco Island", text: "Choose the word connected to protecting nature.", hint: "Perkataan ini selalu digunakan dengan rubbish, energy dan environment.", options: ["recycle", "borrow", "perform", "fetch"], answer: "recycle", explain: "Recycle bermaksud mengitar semula untuk menjaga alam sekitar.", focus: "Environment" },
-      { category: "vocabulary", topic: "Places and directions", title: "Town Map", text: "Where can you wait for a train?", hint: "Perkataan tempat dalam pengangkutan.", options: ["platform", "bandage", "cereal", "beak"], answer: "platform", explain: "Platform ialah tempat penumpang menunggu train.", focus: "Transport places" },
-      { category: "vocabulary", topic: "Materials", title: "Material Mine", text: "Which one is a material?", hint: "Cari benda yang boleh digunakan untuk membuat objek.", options: ["metal", "tonight", "angrily", "ever"], answer: "metal", explain: "Metal ialah bahan seperti besi, aluminium atau keluli.", focus: "Materials" },
-      { category: "function", topic: "Ask and express rules and obligations", title: "Uniform Office", text: "Which sentence expresses no obligation?", hint: "Maksudnya tidak wajib.", options: ["You don't have to wear uniform.", "You must wear uniform.", "You should wear uniform.", "You may wear uniform."], answer: "You don't have to wear uniform.", explain: "Don't have to bermaksud tidak perlu atau tidak wajib.", focus: "Rules" },
-      { category: "function", topic: "Make and respond to suggestions", title: "Suggestion Stage", text: "Choose the best response: Let's join the science quiz.", hint: "Jawapan perlu bersetuju dengan cadangan.", options: ["That's a good idea.", "I was feeding it.", "Since Monday.", "It is grown in India."], answer: "That's a good idea.", explain: "That's a good idea ialah respons sesuai untuk cadangan.", focus: "Suggestions" },
-      { category: "function", topic: "Explain and give reasons for simple advice", title: "Advice Avenue", text: "Choose advice with a reason.", hint: "Cari ayat yang ada nasihat dan sebab.", options: ["You should rest because you look tired.", "Where is the theatre?", "I have been here for an hour.", "Someone will find it."], answer: "You should rest because you look tired.", explain: "Should memberi nasihat, because memberi sebab.", focus: "Advice" },
-      { category: "function", topic: "Keep interaction going by asking questions", title: "Conversation Camp", text: "Your friend says, 'I went to a concert.' What can you ask next?", hint: "Soalan lanjutan mengekalkan interaksi.", options: ["Who did you go with?", "Cotton is grown.", "Turn off the light.", "It starts at seven."], answer: "Who did you go with?", explain: "Soalan ini menyambung perbualan secara natural.", focus: "Interaction" },
-      { category: "function", topic: "Narrate short stories, events and experiences", title: "Story Path", text: "Choose the best sequencing word to begin a story.", hint: "Recycle Year 5: sequencing adverbs.", options: ["First", "Anywhere", "Too", "Since"], answer: "First", explain: "First sesuai untuk langkah atau peristiwa pertama.", focus: "Sequencing" }
+    const allQuestions = [
+      { category: 'Grammar: Past Continuous', question: 'He ________ the elephant when it suddenly escaped.', options: ['was feeding', 'is feeding', 'fed', 'feeds'], correct: 0, reason: "Use Past Continuous ('was feeding') for an ongoing past action." },
+      { category: 'Grammar: Used to', question: 'Before he became a teacher, he ________ be an actor.', options: ['use to', 'used to', 'using to', 'uses to'], correct: 1, reason: "Use 'used to' for past habits or states that are no longer true." },
+      { category: 'Grammar: Present Perfect', question: '________ you ever been to Sarawak?', options: ['Has', 'Are', 'Have', 'Did'], correct: 2, reason: "Use 'Have' with 'you' for present perfect experience questions." },
+      { category: 'Grammar: For and Since', question: 'How long have you been here? ________ 3 o’clock.', options: ['For', 'Since', 'Ever', 'Yet'], correct: 1, reason: "Use 'since' with a starting point in time." },
+      { category: 'Grammar: Passive Voice', question: 'Cotton ________ in India and exported worldwide.', options: ['grow', 'is grew', 'is grown', 'growing'], correct: 2, reason: "Passive voice uses be + past participle: is grown." },
+      { category: 'Grammar: First Conditional', question: 'If you rest now, you ________ better tomorrow.', options: ['felt', 'will feel', 'feeling', 'feel'], correct: 1, reason: "First conditional: If + present simple, will + base verb." },
+      { category: 'Grammar: Question Tags', question: 'You don’t know me, ________?', options: ['don’t you', 'do you', 'are you', 'aren’t you'], correct: 1, reason: "A negative statement takes a positive tag: do you?" },
+      { category: 'Vocabulary: Jobs', question: 'Someone who travels to space in a rocket is an ________.', options: ['engineer', 'mechanic', 'astronaut', 'inventor'], correct: 2, reason: 'An astronaut is trained to travel and work in space.' },
+      { category: 'Vocabulary: Environment', question: 'We should ________ paper, plastic, and glass to protect the environment.', options: ['recycle', 'litter', 'burn', 'melt'], correct: 0, reason: 'Recycle means to process and reuse materials.' },
+      { category: 'Vocabulary: Places', question: 'If there is a fire, you must call the ________ immediately.', options: ['police station', 'fire station', 'chemist', 'stadium'], correct: 1, reason: 'Firefighters work at the fire station.' },
+      { category: 'Function: Suggestions', question: 'Your friend is bored. What should you say to make a suggestion?', options: ['You must play!', 'Why don’t we play a game?', 'Where is the game?', 'I am bored too.'], correct: 1, reason: "'Why don’t we...' is a polite way to suggest something." },
+      { category: 'Function: Obligations', question: 'What is a rule you usually hear in a library?', options: ['You don’t have to read.', 'You might be quiet.', 'You must be quiet.', 'You will be quiet.'], correct: 2, reason: "'Must' expresses a strong rule or obligation." },
+      { category: 'Function: Advice', question: 'Which sentence gives advice with a reason?', options: ['You should rest because you look tired.', 'I went to a concert.', 'Someone will find it.', 'It starts at seven.'], correct: 0, reason: "'Should' gives advice and 'because' gives the reason." }
     ];
 
-    const state = { deck: [], index: 0, score: 0, streak: 0, stars: 0, lives: 3, answered: false, skillScores: { grammar: 0, vocabulary: 0, function: 0 }, rule: 0 };
+    let selectedQuestions = [];
+    let currentIdx = 0;
+    let score = 0;
 
-    const els = {
-      tabBtns: document.querySelectorAll(".tab-btn"), sections: { nota: document.getElementById("notaSection"), makmal: document.getElementById("makmalSection"), kuiz: document.getElementById("kuizSection") }, heroEyebrow: document.getElementById("heroEyebrow"), heroTitle: document.getElementById("heroTitle"), heroText: document.getElementById("heroText"), grammarTopics: document.getElementById("grammarTopics"), functionCards: document.getElementById("functionCards"), vocabChips: document.getElementById("vocabChips"), ruleButtons: document.getElementById("ruleButtons"), labType: document.getElementById("labType"), labTitle: document.getElementById("labTitle"), labDesc: document.getElementById("labDesc"), labExample: document.getElementById("labExample"), labChallenge: document.getElementById("labChallenge"), builderName: document.getElementById("builderName"), builderVerb: document.getElementById("builderVerb"), builderObject: document.getElementById("builderObject"), builderOutput: document.getElementById("builderOutput"), playerName: document.getElementById("playerName"), mode: document.getElementById("mode"), modeLabel: document.getElementById("modeLabel"), roundLabel: document.getElementById("roundLabel"), categoryTag: document.getElementById("categoryTag"), topicTag: document.getElementById("topicTag"), questionText: document.getElementById("questionText"), questionHint: document.getElementById("questionHint"), answers: document.getElementById("answers"), feedback: document.getElementById("feedback"), nextBtn: document.getElementById("nextBtn"), hintBtn: document.getElementById("hintBtn"), restartBtn: document.getElementById("restartBtn"), score: document.getElementById("score"), streak: document.getElementById("streak"), stars: document.getElementById("stars"), lives: document.getElementById("lives"), bar: document.getElementById("bar"), progressText: document.getElementById("progressText"), skillList: document.getElementById("skillList"), modal: document.getElementById("modal"), resultTitle: document.getElementById("resultTitle"), resultText: document.getElementById("resultText"), playAgainBtn: document.getElementById("playAgainBtn")
-    };
-
-    const heroCopy = {
-      nota: ["DSKP Year 6", "Nota yang kemas, terus kepada isi.", "Ringkasan grammar, language functions dan vocabulary disusun dalam kad visual supaya mudah dirujuk sebelum bermain."],
-      makmal: ["Interactive Lab", "Eksperimen dengan ayat dan konteks.", "Pilih fokus bahasa, lihat contoh, bina ayat sendiri dan cuba mini cabaran sebelum masuk kuiz."],
-      kuiz: ["Game Mode", "Jawab, kumpul bintang, naikkan streak.", "Soalan grammar, vocabulary dan language functions dijana daripada kandungan Tahun 6." ]
-    };
-
-    function shuffle(items) { return [...items].sort(() => Math.random() - 0.5); }
-    function capitalize(word) { return word.charAt(0).toUpperCase() + word.slice(1); }
-
-    function renderNotes() {
-      const colors = ["#2563eb", "#4f46e5", "#0891b2", "#16a34a", "#f59e0b", "#e11d48"];
-      els.grammarTopics.innerHTML = grammarTopics.map((item, i) => `
-        <article class="topic">
-          <span class="topic-icon" style="background:${colors[i % colors.length]}">${item[2]}</span>
-          <span><strong>${item[0]}</strong><p>${item[1]}</p></span>
-        </article>
-      `).join("");
-
-      els.functionCards.innerHTML = functionsList.map((item) => `
-        <article class="mini-card"><strong>${item[0]}</strong><p>${item[1]}</p></article>
-      `).join("");
-
-      els.vocabChips.innerHTML = vocabulary.map((word) => `<span class="chip">${word}</span>`).join("");
+    function renderGrammar() {
+      const list = document.getElementById('grammar-list');
+      list.innerHTML = grammarItems.map(item => `
+        <div class="border border-gray-200 rounded-xl overflow-hidden">
+          <button onclick="toggleAccordion('${item.id}')" class="w-full text-left p-4 bg-gray-50 hover:bg-gray-100 flex justify-between items-center font-bold text-lg focus:outline-none">
+            <span class="flex items-center"><img src="https://api.dicebear.com/7.x/bottts/svg?seed=${item.icon}" alt="Robot" class="w-8 h-8 mr-3 bg-${item.color}-100 rounded-full">${item.title}</span>
+            <i id="icon-${item.id}" class="fas fa-chevron-down transition-transform text-gray-400"></i>
+          </button>
+          <div id="acc-${item.id}" class="accordion-content bg-white">
+            <div class="p-5 border-t border-gray-100">
+              <p class="text-gray-600 mb-3">${item.rule}</p>
+              <div class="bg-${item.color}-50 p-4 rounded-lg border-l-4 border-${item.color}-400 font-medium mb-4">Example: ${item.example}</div>
+              <div class="bg-gray-50 p-4 rounded-lg border border-gray-200">
+                <h4 class="font-bold text-gray-700 mb-2"><i class="fas fa-gamepad text-${item.color}-500 mr-2"></i> Test Yourself!</h4>
+                <p class="text-sm text-gray-600 mb-2">${item.quiz} <input type="text" id="quiz-${item.id}" class="mini-quiz-input border-2 border-gray-300 rounded px-2 py-1 w-28 outline-none focus:border-${item.color}-500 transition" placeholder="${item.placeholder}">.</p>
+                <button onclick="checkQuiz('quiz-${item.id}', '${item.answer.replace(/'/g, "\\'")}')" class="bg-${item.color}-500 text-white px-4 py-1 rounded shadow hover:opacity-90 text-sm font-bold">Check</button>
+                <span id="feedback-quiz-${item.id}" class="ml-3 text-sm font-bold"></span>
+              </div>
+            </div>
+          </div>
+        </div>`).join('');
     }
 
-    function renderRules() {
-      els.ruleButtons.innerHTML = rules.map((rule, i) => `
-        <button class="rule-btn ${i === state.rule ? "active" : ""}" data-rule="${i}">${rule.title}<span>${rule.type}</span></button>
-      `).join("");
-      els.ruleButtons.querySelectorAll("button").forEach((btn) => btn.addEventListener("click", () => setRule(Number(btn.dataset.rule))));
-      setRule(state.rule);
+    function renderVocab() {
+      document.getElementById('vocab-cards').innerHTML = vocabCards.map(card => `
+        <div class="flip-card group" onclick="flipCard(this)">
+          <div class="flip-card-inner rounded-xl">
+            <div class="flip-card-front bg-cover bg-center relative" style="background-image:url('${card.image}')">
+              <div class="absolute inset-0 card-img-overlay flex flex-col justify-center items-center p-4">
+                <i class="fas ${card.icon} text-5xl text-${card.color}-300 mb-3 group-hover:scale-110 transition-transform"></i>
+                <h3 class="text-2xl font-black text-white tracking-wider shadow-sm">${card.title}</h3>
+                <p class="text-${card.color}-200 mt-1 font-semibold">${card.subtitle}</p>
+              </div>
+            </div>
+            <div class="flip-card-back bg-${card.color}-600 p-4 overflow-y-auto">
+              <h3 class="text-xl font-bold mb-3 border-b border-white/30 pb-1 flex items-center justify-center"><i class="fas ${card.icon} mr-2"></i>${card.title}</h3>
+              <ul class="text-base space-y-2 text-left list-none pl-2">${card.words.map(w => `<li><strong>${w}</strong></li>`).join('')}</ul>
+            </div>
+          </div>
+        </div>`).join('');
     }
 
-    function setRule(index) {
-      state.rule = index;
-      const rule = rules[index];
-      els.ruleButtons.querySelectorAll("button").forEach((btn) => btn.classList.toggle("active", Number(btn.dataset.rule) === index));
-      els.labType.textContent = rule.type;
-      els.labTitle.textContent = rule.title;
-      els.labDesc.textContent = rule.desc;
-      els.labExample.textContent = rule.example;
-      els.labChallenge.textContent = rule.challenge;
-      els.builderVerb.innerHTML = rule.options.map((option) => `<option value="${option}">${option}</option>`).join("");
-      updateBuilder();
+    function renderFunctions() {
+      document.getElementById('function-list').innerHTML = functionsData.map((item, idx) => `
+        <div class="bg-${item.theme}-50 border-2 border-${item.theme}-200 rounded-2xl p-5 shadow-sm">
+          <h3 class="font-bold text-xl text-${item.theme}-800 mb-4 border-b border-${item.theme}-200 pb-2">${idx + 1}. ${item.title}</h3>
+          <div class="flex items-end gap-3 mb-4">
+            <img src="https://api.dicebear.com/7.x/adventurer/svg?seed=Ali${idx}" alt="Student" class="w-12 h-12 rounded-full bg-${item.theme}-200 shadow">
+            <div class="bg-white p-3 shadow-sm chat-bubble-left max-w-[80%] text-gray-700">${item.left}</div>
+          </div>
+          <div class="flex items-end justify-end gap-3 mb-2">
+            <div class="bg-${item.theme}-600 text-white p-3 shadow-sm chat-bubble-right max-w-[80%] font-medium">
+              <ul class="list-disc list-inside">${item.right.map(line => `<li>${line}</li>`).join('')}</ul>
+            </div>
+            <img src="https://api.dicebear.com/7.x/adventurer/svg?seed=Mia${idx}" alt="Student" class="w-12 h-12 rounded-full bg-indigo-200 shadow">
+          </div>
+        </div>`).join('');
     }
 
-    function updateBuilder() {
-      const subject = els.builderName.value.trim() || "He";
-      const verb = els.builderVerb.value;
-      const object = els.builderObject.value.trim() || "the elephant";
-      els.builderOutput.textContent = `${subject} ${verb} ${object}.`;
+    function showTab(tabId) {
+      document.querySelectorAll('.tab-content').forEach(el => el.classList.add('hidden'));
+      document.querySelectorAll('.tab-btn').forEach(el => {
+        el.classList.remove('bg-teal-600', 'bg-indigo-600', 'text-white', 'shadow-md');
+        el.classList.add('bg-white');
+        if (el.id === 'btn-quiz-game') el.classList.add('text-indigo-600');
+        else el.classList.add('text-teal-600');
+      });
+      document.getElementById(tabId).classList.remove('hidden');
+      const activeBtn = document.getElementById('btn-' + tabId);
+      activeBtn.classList.remove('bg-white', 'text-teal-600', 'text-indigo-600');
+      activeBtn.classList.add(tabId === 'quiz-game' ? 'bg-indigo-600' : 'bg-teal-600', 'text-white', 'shadow-md');
     }
 
-    function setTab(tab) {
-      els.tabBtns.forEach((btn) => btn.classList.toggle("active", btn.dataset.tab === tab));
-      Object.entries(els.sections).forEach(([key, section]) => section.classList.toggle("active", key === tab));
-      const copy = heroCopy[tab];
-      els.heroEyebrow.textContent = copy[0];
-      els.heroTitle.textContent = copy[1];
-      els.heroText.textContent = copy[2];
+    function toggleAccordion(id) {
+      const content = document.getElementById('acc-' + id);
+      const icon = document.getElementById('icon-' + id);
+      if (content.classList.contains('open')) {
+        content.classList.remove('open');
+        content.style.maxHeight = '0';
+        icon.classList.remove('rotate-180');
+      } else {
+        document.querySelectorAll('.accordion-content').forEach(el => { el.classList.remove('open'); el.style.maxHeight = '0'; });
+        document.querySelectorAll('.fa-chevron-down').forEach(el => el.classList.remove('rotate-180'));
+        content.classList.add('open');
+        content.style.maxHeight = content.scrollHeight + 'px';
+        icon.classList.add('rotate-180');
+      }
     }
 
-    function buildDeck() {
-      const mode = els.mode.value;
-      const pool = mode === "mixed" ? questionBank : questionBank.filter((item) => item.category === mode);
-      state.deck = shuffle(pool).slice(0, 12);
-      if (state.deck.length < 12) state.deck = shuffle([...state.deck, ...pool, ...pool]).slice(0, 12);
-      els.modeLabel.textContent = els.mode.options[els.mode.selectedIndex].textContent;
+    function flipCard(element) { element.classList.toggle('flipped'); }
+
+    function checkQuiz(inputId, correctWord) {
+      const input = document.getElementById(inputId);
+      const feedback = document.getElementById('feedback-' + inputId);
+      const userAns = input.value.toLowerCase().trim();
+      if (userAns === correctWord.toLowerCase()) {
+        feedback.innerHTML = '<i class="fas fa-check-circle text-green-500 text-lg"></i> <span class="text-green-600">Correct!</span>';
+        input.classList.remove('border-red-500', 'bg-red-50');
+        input.classList.add('border-green-500', 'bg-green-50');
+      } else if (userAns === '') {
+        feedback.innerHTML = '<span class="text-gray-500">Please enter an answer.</span>';
+      } else {
+        feedback.innerHTML = '<i class="fas fa-times-circle text-red-500 text-lg"></i> <span class="text-red-600">Try again!</span>';
+        input.classList.remove('border-green-500', 'bg-green-50');
+        input.classList.add('border-red-500', 'bg-red-50');
+      }
+    }
+
+    function shuffleArray(array) {
+      for (let i = array.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [array[i], array[j]] = [array[j], array[i]];
+      }
+      return array;
     }
 
     function startGame() {
-      buildDeck();
-      state.index = 0; state.score = 0; state.streak = 0; state.stars = 0; state.lives = 3; state.answered = false;
-      state.skillScores = { grammar: 0, vocabulary: 0, function: 0 };
-      els.modal.classList.remove("show");
-      renderQuestion(); renderStats();
+      selectedQuestions = shuffleArray([...allQuestions]).slice(0, 10);
+      currentIdx = 0;
+      score = 0;
+      document.getElementById('score').textContent = score;
+      document.getElementById('start-screen').classList.add('hidden');
+      document.getElementById('end-screen').classList.add('hidden');
+      document.getElementById('quiz-screen').classList.remove('hidden');
+      document.getElementById('quiz-screen').classList.add('flex');
+      loadQuestion();
     }
 
-    function renderQuestion() {
-      const q = state.deck[state.index];
-      state.answered = false;
-      els.roundLabel.textContent = `Round ${state.index + 1} / ${state.deck.length}`;
-      els.categoryTag.textContent = q.category === "function" ? "Language Function" : capitalize(q.category);
-      els.topicTag.textContent = q.topic;
-      els.questionText.textContent = q.text;
-      els.questionHint.textContent = "Pilih satu jawapan.";
-      els.feedback.textContent = `${els.playerName.value || "Explorer"}, tekan jawapan untuk mula mengumpul bintang.`;
-      els.nextBtn.disabled = true;
-      els.answers.innerHTML = "";
-      shuffle(q.options).forEach((option) => {
-        const btn = document.createElement("button");
-        btn.className = "answer"; btn.type = "button"; btn.textContent = option;
-        btn.addEventListener("click", () => chooseAnswer(btn, option));
-        els.answers.appendChild(btn);
+    function loadQuestion() {
+      const feedbackArea = document.getElementById('feedback-area');
+      feedbackArea.innerHTML = '';
+      feedbackArea.className = 'min-h-[4rem] py-2 flex flex-col items-center justify-center text-center font-bold text-white transition-colors duration-300 bg-transparent';
+      const q = selectedQuestions[currentIdx];
+      document.getElementById('current-question-num').textContent = currentIdx + 1;
+      document.getElementById('question-category').textContent = q.category;
+      document.getElementById('question-text').textContent = q.question;
+      document.getElementById('progress-bar').style.width = `${(currentIdx / 10) * 100}%`;
+      const optionsContainer = document.getElementById('options-container');
+      optionsContainer.innerHTML = '';
+      q.options.forEach((opt, index) => {
+        const btn = document.createElement('button');
+        btn.className = 'option-btn w-full bg-indigo-50 hover:bg-indigo-100 text-indigo-900 border-2 border-indigo-200 font-bold py-4 px-6 rounded-xl text-left flex justify-between items-center';
+        btn.innerHTML = `<span>${opt}</span> <i class="fas fa-circle outline-none text-indigo-200"></i>`;
+        btn.onclick = () => checkAnswer(index, btn);
+        optionsContainer.appendChild(btn);
       });
-      renderStats();
-    }
-
-    function chooseAnswer(button, option) {
-      if (state.answered) return;
-      state.answered = true;
-      const q = state.deck[state.index];
-      const isCorrect = option === q.answer;
-      [...els.answers.querySelectorAll("button")].forEach((btn) => { btn.disabled = true; if (btn.textContent === q.answer) btn.classList.add("correct"); });
-      if (isCorrect) {
-        button.classList.add("correct");
-        state.streak += 1; state.stars += state.streak >= 3 ? 2 : 1; state.score += 100 + Math.min(state.streak * 15, 75); state.skillScores[q.category] += 1;
-        els.feedback.textContent = `Tepat. ${q.explain}`;
-      } else {
-        button.classList.add("wrong"); state.streak = 0; state.lives -= 1;
-        els.feedback.textContent = `Belum tepat. Jawapan: ${q.answer}. ${q.explain}`;
-      }
-      els.nextBtn.disabled = false; renderStats();
-      if (state.lives <= 0) setTimeout(() => finishGame(false), 650);
     }
 
     function nextQuestion() {
-      if (state.index >= state.deck.length - 1) { finishGame(true); return; }
-      state.index += 1; renderQuestion();
+      currentIdx++;
+      if (currentIdx < 10) loadQuestion();
+      else showEndScreen();
     }
 
-    function showHint() {
-      const q = state.deck[state.index];
-      els.questionHint.textContent = q.hint;
-      els.feedback.textContent = `Petunjuk: ${q.focus}.`;
+    function checkAnswer(selectedIndex, btnElement) {
+      const buttons = document.getElementById('options-container').querySelectorAll('button');
+      buttons.forEach(b => b.disabled = true);
+      const q = selectedQuestions[currentIdx];
+      const isCorrect = selectedIndex === q.correct;
+      const feedbackArea = document.getElementById('feedback-area');
+
+      if (isCorrect) {
+        score++;
+        document.getElementById('score').textContent = score;
+        btnElement.classList.replace('bg-indigo-50', 'bg-green-100');
+        btnElement.classList.replace('border-indigo-200', 'border-green-500');
+        btnElement.classList.replace('text-indigo-900', 'text-green-800');
+        btnElement.querySelector('i').className = 'fas fa-check-circle text-green-500 text-xl';
+        feedbackArea.innerHTML = '<span class="text-xl">Correct! ✨</span>';
+        feedbackArea.classList.add('bg-green-500');
+        setTimeout(nextQuestion, 1400);
+      } else {
+        btnElement.classList.replace('bg-indigo-50', 'bg-red-100');
+        btnElement.classList.replace('border-indigo-200', 'border-red-500');
+        btnElement.classList.replace('text-indigo-900', 'text-red-800');
+        btnElement.querySelector('i').className = 'fas fa-times-circle text-red-500 text-xl';
+        const quizScreen = document.getElementById('quiz-screen');
+        quizScreen.classList.add('shake');
+        setTimeout(() => quizScreen.classList.remove('shake'), 400);
+        const correctBtn = buttons[q.correct];
+        correctBtn.classList.replace('bg-indigo-50', 'bg-green-100');
+        correctBtn.classList.replace('border-indigo-200', 'border-green-500');
+        correctBtn.querySelector('i').className = 'fas fa-check-circle text-green-500 text-xl';
+        feedbackArea.classList.add('bg-red-500');
+        feedbackArea.innerHTML = `<div class="flex flex-col items-center justify-center space-y-2 px-4 py-2"><span class="text-lg uppercase tracking-wide">Incorrect 📚</span><span class="text-sm md:text-base font-medium max-w-lg leading-tight text-red-50">${q.reason}</span><button onclick="nextQuestion()" class="mt-2 bg-white text-red-600 px-6 py-2 rounded-full text-sm font-black hover:bg-red-50 transition shadow-md border border-red-200">Next Question <i class="fas fa-arrow-right ml-1"></i></button></div>`;
+      }
     }
 
-    function finishGame(completed) {
-      const name = els.playerName.value || "Explorer";
-      const correct = state.skillScores.grammar + state.skillScores.vocabulary + state.skillScores.function;
-      const percent = Math.round(correct / state.deck.length * 100);
-      els.resultTitle.textContent = completed ? `Hebat, ${name}!` : `Cuba lagi, ${name}`;
-      els.resultText.textContent = completed ? `Misi tamat dengan ${state.score} mata, ${state.stars} bintang dan ketepatan ${percent}%.` : `Nyawa sudah habis. Skor kamu: ${state.score}. Cuba semula untuk kuatkan grammar dan vocabulary.`;
-      els.modal.classList.add("show");
+    function showEndScreen() {
+      const quizScreen = document.getElementById('quiz-screen');
+      quizScreen.classList.add('hidden');
+      quizScreen.classList.remove('flex');
+      document.getElementById('end-screen').classList.remove('hidden');
+      document.getElementById('progress-bar').style.width = '100%';
+      document.getElementById('final-score').textContent = score;
+      const msgEl = document.getElementById('result-message');
+      const emojiEl = document.getElementById('result-emoji');
+      if (score === 10) { emojiEl.textContent = '🌟'; msgEl.innerHTML = 'Outstanding! Your Year 6 English mastery is incredibly solid.'; createConfetti(); }
+      else if (score >= 7) { emojiEl.textContent = '👏'; msgEl.innerHTML = 'Congratulations! Great achievement. Keep reading and practicing.'; }
+      else if (score >= 4) { emojiEl.textContent = '👍'; msgEl.innerHTML = "Good effort. Review the Grammar and Vocabulary tabs to improve further."; }
+      else { emojiEl.textContent = '💪'; msgEl.innerHTML = "Don’t give up! Keep reading the notes and try again."; }
     }
 
-    function renderStats() {
-      els.score.textContent = state.score; els.streak.textContent = state.streak; els.stars.textContent = state.stars; els.lives.textContent = "♥".repeat(Math.max(state.lives, 0));
-      const progress = Math.round(((state.index + (state.answered ? 1 : 0)) / state.deck.length) * 100);
-      els.bar.style.width = `${progress}%`; els.progressText.textContent = `${progress}%`;
-      renderSkills();
+    function restartGame() {
+      document.querySelectorAll('.confetti').forEach(c => c.remove());
+      startGame();
     }
 
-    function renderSkills() {
-      const items = [
-        { key: "grammar", name: "Grammar", text: "tenses, modals, passive, tags", color: "#2563eb" },
-        { key: "vocabulary", name: "Vocabulary", text: "core words Tahun 6", color: "#16a34a" },
-        { key: "function", name: "Functions", text: "advice, rules, stories, plans", color: "#e11d48" }
-      ];
-      els.skillList.innerHTML = items.map((item) => `
-        <div class="focus-item"><span class="focus-icon" style="background:${item.color}">${item.name.charAt(0)}</span><span><strong>${item.name}</strong><span>${item.text}</span></span><span class="mini-score">${state.skillScores[item.key]}</span></div>
-      `).join("");
+    function createConfetti() {
+      const colors = ['#ef4444', '#22c55e', '#3b82f6', '#facc15', '#a855f7', '#06b6d4'];
+      for (let i = 0; i < 50; i++) {
+        const confetti = document.createElement('div');
+        confetti.classList.add('confetti');
+        confetti.style.left = Math.random() * 100 + 'vw';
+        confetti.style.top = '-10px';
+        confetti.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+        confetti.style.animationDuration = (Math.random() * 3 + 2) + 's';
+        confetti.style.opacity = Math.random();
+        document.body.appendChild(confetti);
+      }
     }
 
-    els.tabBtns.forEach((btn) => btn.addEventListener("click", () => setTab(btn.dataset.tab)));
-    [els.builderName, els.builderVerb, els.builderObject].forEach((el) => el.addEventListener("input", updateBuilder));
-    els.nextBtn.addEventListener("click", nextQuestion);
-    els.hintBtn.addEventListener("click", showHint);
-    els.restartBtn.addEventListener("click", startGame);
-    els.playAgainBtn.addEventListener("click", startGame);
-    els.mode.addEventListener("change", startGame);
-
-    renderNotes(); renderRules(); startGame();
+    renderGrammar();
+    renderVocab();
+    renderFunctions();
   </script>
 </body>
 </html>
